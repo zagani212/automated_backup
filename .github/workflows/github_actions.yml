@@ -14,5 +14,6 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            mongodump --db testdb --collection testCollection --out - | gzip > /backups/dump_github_action_$(date "%Y-%m-%d_%H_%M").gz
-            rclone copy /backups/dump_github_action_$(date "%Y-%m-%d_%H_%M").gz r2:automated_backups
+            FILE_NAME=$(date "+%Y-%m-%d_%H_%M")
+            mongodump --db testdb --collection testCollection --out - | gzip > /backups/dump_github_action_$FILE_NAME.gz
+            rclone copy /backups/dump_github_action_$FILE_NAME.gz r2:automated_backups
